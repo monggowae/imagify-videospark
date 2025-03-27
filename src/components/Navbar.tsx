@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { ImageIcon, VideoIcon, FolderIcon } from 'lucide-react';
+import CreditDisplay from './CreditDisplay';
 
 const Navbar = () => {
   const location = useLocation();
@@ -44,26 +45,30 @@ const Navbar = () => {
           <span className="font-medium tracking-tight text-lg">Creato</span>
         </Link>
         
-        <nav className="glass rounded-full px-4 py-2 backdrop-blur-md">
-          <ul className="flex space-x-1">
-            {navLinks.map((link) => (
-              <li key={link.name}>
-                <Link
-                  to={link.path}
-                  className={cn(
-                    'flex items-center px-4 py-2 rounded-full transition-all duration-300 text-sm font-medium btn-hover',
-                    location.pathname === link.path
-                      ? 'bg-primary text-primary-foreground'
-                      : 'text-foreground/80 hover:text-foreground hover:bg-accent'
-                  )}
-                >
-                  {link.icon}
-                  {link.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <div className="flex items-center gap-4">
+          <CreditDisplay />
+          
+          <nav className="glass rounded-full px-4 py-2 backdrop-blur-md">
+            <ul className="flex space-x-1">
+              {navLinks.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    to={link.path}
+                    className={cn(
+                      'flex items-center px-4 py-2 rounded-full transition-all duration-300 text-sm font-medium btn-hover',
+                      location.pathname === link.path
+                        ? 'bg-primary text-primary-foreground'
+                        : 'text-foreground/80 hover:text-foreground hover:bg-accent'
+                    )}
+                  >
+                    {link.icon}
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
       </div>
     </header>
   );

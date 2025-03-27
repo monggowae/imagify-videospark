@@ -6,17 +6,31 @@ import LoadingIndicator from './LoadingIndicator';
 import { cn } from '@/lib/utils';
 import { generateImage, generateVideo } from '@/utils/generationUtils';
 import { toast } from 'sonner';
+import { useCredits } from '@/context/CreditContext';
 
 interface GeneratorProps {
   onSave: (creation: Creation) => void;
   className?: string;
 }
 
+const CREDIT_COSTS = {
+  image: 5,
+  video: 15
+};
+
 const Generator = ({ onSave, className }: GeneratorProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [currentCreation, setCurrentCreation] = useState<Creation | null>(null);
+  const { deductCredits } = useCredits();
 
   const handleGenerate = async (prompt: string, type: 'image' | 'video') => {
+    // Check if user has enough credits
+    const creditCost = CREDIT_COSTS[type];
+    
+    if (!deductCredits(creditCost)) {
+      return; // Not enough credits, deductCredits will show an error toast
+    }
+    
     setIsLoading(true);
     setCurrentCreation(null);
     
@@ -61,6 +75,19 @@ const Generator = ({ onSave, className }: GeneratorProps) => {
         isLoading={isLoading}
         className="mb-8"
       />
+      
+      <div className="mt-8 flex justify-center gap-4 text-sm text-muted-foreground">
+        <div className="flex items-center">
+          <span className="font-medium">{CREDIT_COSTS.image} credits</span>
+          <span className="mx-2">·</span>
+          <span>per image</span>
+        </div>
+        <div className="flex items-center">
+          <span className="font-medium">{CREDIT_COSTS.video} credits</span>
+          <span className="mx-2">·</span>
+          <span>per video</span>
+        </div>
+      </div>
       
       <div className="mt-12 h-[400px] flex items-center justify-center">
         {isLoading ? (

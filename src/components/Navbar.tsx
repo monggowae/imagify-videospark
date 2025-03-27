@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { ImageIcon, VideoIcon, FolderIcon } from 'lucide-react';
+import { ImageIcon, VideoIcon, FolderIcon, UserIcon } from 'lucide-react';
 import CreditDisplay from './CreditDisplay';
 
 const Navbar = () => {
@@ -24,6 +24,7 @@ const Navbar = () => {
   const navLinks = [
     { name: 'Create', path: '/', icon: <ImageIcon className="h-4 w-4 mr-2" /> },
     { name: 'Gallery', path: '/gallery', icon: <FolderIcon className="h-4 w-4 mr-2" /> },
+    { name: 'Profile', path: '/profile', icon: <UserIcon className="h-4 w-4 mr-2" /> },
   ];
 
   return (
